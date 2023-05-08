@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "241867639299",
+    "project_id": "expanse-52040",
+    "storage_bucket": "expanse-52040.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241867639299:android:528af9b583ec516abc1c36",
+        "android_client_info": {
+          "package_name": "com.tushar.data_expanse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241867639299-c57beo7dqnl6ir8te4chveauil958ro5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWb3hX_Ylj4oe2Qh3UU2uva9D0LJAEviA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241867639299-c57beo7dqnl6ir8te4chveauil958ro5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
