@@ -3,6 +3,7 @@ import 'package:data_expanse/base/base_controller.dart';
 import 'package:data_expanse/db/db_helper.dart';
 import 'package:data_expanse/model/expanseModel.dart';
 import 'package:data_expanse/utils/toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,7 @@ class HomeBinding implements Bindings {
 class HomeController extends BaseController {
   TextEditingController textcontrollerAMOUNT = TextEditingController();
   TextEditingController textcontrollerITEM = TextEditingController();
+  var userid = FirebaseAuth.instance.currentUser?.uid;
   final formKey = GlobalKey<FormState>();
   String? currentDate;
   bool isIncome = false;
