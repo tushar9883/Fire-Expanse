@@ -23,21 +23,22 @@ class HomeController extends BaseController {
   readDate() {
     Timestamp utcTime = Timestamp.now();
     DateTime dateTime = utcTime.toDate();
-    String dateOnly = DateFormat('dd/MM/yyyy').format(dateTime);
+    String dateOnly = DateFormat('dd-MMM-yyyy').format(dateTime);
     currentDate = dateOnly;
     update();
   }
 
-  @override
-  void onInit() {
-    readDate();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   readDate();
+  //   super.onInit();
+  // }
 
   //addExpanse
 
   addNewExpanse() async {
     showLoadingDialog();
+    readDate();
     if (textcontrollerAMOUNT.text.isNotEmpty) {
       if (textcontrollerITEM.text.isNotEmpty) {
         await DbHelp().addExpanse(
