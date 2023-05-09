@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_expanse/base/base_view_view_model.dart';
 import 'package:data_expanse/ui/home/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends BaseView<HomeController> {
   const HomeScreen({super.key});
@@ -107,7 +107,7 @@ class HomeScreen extends BaseView<HomeController> {
                       onPressed: () {
                         // print("Date ${controller.readDate(stamp)}");
                         if (controller.formKey.currentState!.validate()) {
-                          controller.addNewExpanse();
+                          controller.addNewTransaction();
                         }
                       },
                     )
@@ -277,23 +277,145 @@ class HomeScreen extends BaseView<HomeController> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    // Expanded(
-                    //   child: GoogleSheetsApi.loading == true
-                    //       ? const LoadingCircle()
-                    //       : ListView.builder(
-                    //       itemCount:
-                    //       GoogleSheetsApi.currentTransactions.length,
-                    //       itemBuilder: (context, index) {
-                    //         return MyTransaction(
-                    //           transactionName: GoogleSheetsApi
-                    //               .currentTransactions[index][0],
-                    //           money: GoogleSheetsApi
-                    //               .currentTransactions[index][1],
-                    //           expenseOrIncome: GoogleSheetsApi
-                    //               .currentTransactions[index][2],
-                    //         );
-                    //       }),
-                    // )
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () => controller.getAllTransaction(),
+                        child: ListView.builder(
+                            padding: EdgeInsets.only(bottom: 40.h),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: controller.allTransaction?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              var allData = controller.allTransaction![index];
+                              String? itemName = allData.note;
+                              String? price = allData.price;
+                              String? transaction = allData.transaction;
+                              String? date = allData.date;
+
+                              DateTime parseDate =
+                                  DateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                                      .parse(date!);
+                              var inputDate =
+                                  DateTime.parse(parseDate.toString());
+                              var dayFormate = DateFormat('dd');
+                              var monthFormate = DateFormat('MMM');
+                              var dayoutput = dayFormate.format(inputDate);
+                              var monthoutput = monthFormate.format(inputDate);
+
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  child: Container(
+                                    padding: EdgeInsets.all(15.r),
+                                    color: Colors.grey[100],
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 56.w,
+                                              height: 56.w,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.r),
+                                                color: const Color(0xffececec),
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    dayoutput,
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      color:
+                                                      Colors.grey[700],
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    monthoutput,
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                      Colors.grey[700],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 8.w,
+                                                      ),
+                                                      child: Text(
+                                                        itemName!,
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight: FontWeight.w600,
+                                                          color:
+                                                              Colors.grey[700],
+                                                        ),
+                                                        maxLines: 5,
+                                                        overflow: TextOverflow
+                                                            .visible,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${transaction == "0" ? '-' : '+'}\$${price!}',
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      color: transaction == "0"
+                                                          ? Colors.red
+                                                          : Colors.green,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        // SizedBox(
+                                        //   height: 5.h,
+                                        // ),
+                                        // Row(
+                                        //   mainAxisAlignment: MainAxisAlignment.end,
+                                        //   children: [
+                                        //     Text(
+                                        //       outputDate,
+                                        //       style: TextStyle(
+                                        //         fontSize: 10.sp,
+                                        //         color: transaction == "0"
+                                        //             ? Colors.red
+                                        //             : Colors.green,
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
                   ],
                 ),
               ),

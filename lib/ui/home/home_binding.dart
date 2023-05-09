@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_expanse/base/base_controller.dart';
 import 'package:data_expanse/db/db_helper.dart';
-import 'package:data_expanse/model/expanseModel.dart';
+import 'package:data_expanse/model/transactionModel.dart';
 import 'package:data_expanse/utils/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class HomeBinding implements Bindings {
   @override
@@ -17,40 +15,56 @@ class HomeBinding implements Bindings {
 class HomeController extends BaseController {
   TextEditingController textcontrollerAMOUNT = TextEditingController();
   TextEditingController textcontrollerITEM = TextEditingController();
-  var userid = FirebaseAuth.instance.currentUser?.uid;
-  final formKey = GlobalKey<FormState>();
-  String? currentDate;
-  bool isIncome = false;
+  String? userid;
 
-  readDate() {
-    Timestamp utcTime = Timestamp.now();
-    DateTime dateTime = utcTime.toDate();
-    String dateOnly = DateFormat('dd-MMM-yyyy').format(dateTime);
-    currentDate = dateOnly;
+  final formKey = GlobalKey<FormState>();
+
+  bool isIncome = false;
+  List<TransactionModel>? allTransaction;
+
+  @override
+  void onInit() {
+    getAllTransaction();
+    super.onInit();
+  }
+
+  Future<void> getAllTransaction() async {
+    userid = FirebaseAuth.instance.currentUser?.uid;
+    var allData = await DbHelp().getAllExpanse(userid!);
+    allTransaction?.clear();
+    allTransaction = allData;
     update();
   }
 
-  // @override
-  // void onInit() {
-  //   readDate();
-  //   super.onInit();
-  // }
-
-  //addExpanse
-
-  addNewExpanse() async {
+  addNewTransaction() async {
     showLoadingDialog();
-    readDate();
+
+    /// Date Time UTC
+    final utcTime = DateTime.now().toUtc();
+    final localtime = utcTime.toLocal();
+
+    String checkData = "0";
+    if (isIncome) {
+      checkData = "1";
+      update();
+    } else {
+      checkData = "0";
+      update();
+    }
+
     if (textcontrollerAMOUNT.text.isNotEmpty) {
       if (textcontrollerITEM.text.isNotEmpty) {
         await DbHelp().addExpanse(
-          ExpanseModel(
-            price: textcontrollerAMOUNT.text.trim(),
+          TransactionModel(
+            date: localtime.toString(),
             note: textcontrollerITEM.text.trim(),
-            date: currentDate,
+            price: textcontrollerAMOUNT.text.trim(),
+            transaction: checkData.toString(),
+            userid: userid!,
           ),
         );
         update();
+        getAllTransaction();
         hideDialog();
         Get.back();
         textcontrollerAMOUNT.clear();
