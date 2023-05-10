@@ -11,6 +11,7 @@ class TransactionModel {
     this.price,
     this.transaction,
     this.userid,
+    this.uid,
   });
 
   TransactionModel.fromJson(String mId,dynamic json) {
@@ -20,6 +21,7 @@ class TransactionModel {
     price = json['price'];
     transaction = json['transaction'];
     userid = json['userid'];
+    uid = mId;
   }
 
   String? date;
@@ -27,6 +29,7 @@ class TransactionModel {
   int? price;
   int? transaction;
   String? userid;
+  String? uid;
 
   TransactionModel copyWith({
     String? date,
@@ -34,6 +37,7 @@ class TransactionModel {
     int? price,
     int? transaction,
     String? userid,
+    String? uid,
   }) =>
       TransactionModel(
         date: date ?? this.date,
@@ -41,6 +45,7 @@ class TransactionModel {
         price: price ?? this.price,
         transaction: transaction ?? this.transaction,
         userid: userid ?? this.userid,
+        uid: userid ?? this.uid,
       );
 
   Map<String, dynamic> toJson() {
@@ -50,6 +55,7 @@ class TransactionModel {
     map['price'] = price;
     map['transaction'] = transaction;
     map['userid'] = userid;
+    map['uid'] = uid;
     return map;
   }
 }

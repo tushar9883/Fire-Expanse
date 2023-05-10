@@ -24,6 +24,7 @@ class HomeController extends BaseController {
   int totalExpanse = 0;
   int totalIncome = 0;
   int totalAmount = 0;
+  bool isLoading = false;
 
   @override
   void onInit() {
@@ -32,14 +33,13 @@ class HomeController extends BaseController {
   }
 
   Future<void> getAllTransaction() async {
+    isLoading = true;
     userid = FirebaseAuth.instance.currentUser?.uid;
     var allData = await DbHelp().getAllTransaction(userid!);
     allTransaction?.clear();
     allTransaction = allData;
-
-    totalIncome = 0;
-    totalExpanse = 0;
-
+    totalExpanse=0;
+    totalIncome=0;
     for (var i = 0; i < allData.length; i++) {
       if (allData[i].transaction == 0) {
         /// Expanse
@@ -50,9 +50,10 @@ class HomeController extends BaseController {
         totalIncome += allData[i].price!;
         update();
       }
+      update();
     }
     totalAmount = totalIncome - totalExpanse;
-
+    isLoading = false;
     update();
   }
 
@@ -78,7 +79,7 @@ class HomeController extends BaseController {
 
           /// Expanse
         }
-        await DbHelp().addTransaction(
+        var uid = await DbHelp().addTransaction(
           TransactionModel(
             date: localtime.toString(),
             note: textcontrollerITEM.text.trim(),
@@ -87,6 +88,15 @@ class HomeController extends BaseController {
             userid: userid!,
           ),
         );
+
+        await DbHelp().updateID(
+          TransactionModel(
+            uid: uid.id,
+          ),
+          uid.id,
+        );
+
+        print("UID ${uid.id}");
 
         update();
         getAllTransaction();
