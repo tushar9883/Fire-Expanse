@@ -48,7 +48,7 @@ class SingupController extends BaseController {
           password: pass.text.trim(),
           userid: FirebaseAuth.instance.currentUser?.uid,
         ));
-        print("uid :- ${data.id}");
+
         await SecureStorage.writeSecureData("uid", data.id ?? "");
         // await storage.write(key: "uid", value: data.id);
         print(

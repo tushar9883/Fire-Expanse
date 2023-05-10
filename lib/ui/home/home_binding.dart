@@ -38,8 +38,8 @@ class HomeController extends BaseController {
     var allData = await DbHelp().getAllTransaction(userid!);
     allTransaction?.clear();
     allTransaction = allData;
-    totalExpanse=0;
-    totalIncome=0;
+    totalExpanse = 0;
+    totalIncome = 0;
     for (var i = 0; i < allData.length; i++) {
       if (allData[i].transaction == 0) {
         /// Expanse
@@ -56,6 +56,8 @@ class HomeController extends BaseController {
     isLoading = false;
     update();
   }
+
+
 
   addNewTransaction() async {
     showLoadingDialog();
@@ -96,7 +98,7 @@ class HomeController extends BaseController {
           uid.id,
         );
 
-        print("UID ${uid.id}");
+
 
         update();
         getAllTransaction();

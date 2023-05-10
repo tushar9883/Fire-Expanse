@@ -32,7 +32,7 @@ class DbHelp {
   }
 
   Future updateID(TransactionModel transactionModel, String id) async {
-    print("Update data Id $id");
+
     await transactionDb.updateData(
       id ?? "",
       {"uid": id},

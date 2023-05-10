@@ -9,7 +9,7 @@ class UserModel {
   });
 
   UserModel.fromJson(String mId, dynamic json) {
-    print(">>>>> User >>>> $mId");
+
     name = json['name'];
     email = json['email'];
     uid = mId;

@@ -1,4 +1,5 @@
 import 'package:data_expanse/base/base_view_view_model.dart';
+import 'package:data_expanse/db/db_helper.dart';
 import 'package:data_expanse/ui/home/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -296,6 +297,7 @@ class HomeScreen extends BaseView<HomeController> {
                                   String? itemName = allData.note;
                                   int? price = allData.price;
                                   int? transaction = allData.transaction;
+                                  String? uid = allData.uid;
                                   String? date = allData.date;
 
                                   DateTime parseDate =
@@ -319,7 +321,7 @@ class HomeScreen extends BaseView<HomeController> {
                                           children: [
                                             SlidableAction(
                                               onPressed: (context) =>
-                                                  deleteDialog(context),
+                                                  deleteDialog(context, uid!),
                                               backgroundColor: Colors.red,
                                               foregroundColor: Colors.white,
                                               icon: Icons.delete,
@@ -448,9 +450,9 @@ class HomeScreen extends BaseView<HomeController> {
                       padding: REdgeInsets.all(10.0),
                       width: 100.w,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.r)),
-                      // child: const CircularProgressIndicator(),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                       child: const SpinKitFadingCircle(
                         color: Colors.blue,
                         size: 50.0,
@@ -465,7 +467,7 @@ class HomeScreen extends BaseView<HomeController> {
     );
   }
 
-  deleteDialog(BuildContext context) {
+  deleteDialog(BuildContext context, String id) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -495,30 +497,11 @@ class HomeScreen extends BaseView<HomeController> {
                   Center(
                     child: InkWell(
                       onTap: () async {
-                        // controller
-                        //     .showLoadingDialog();
-                        // print(
-                        //     'Delete');
-                        // await DbHelp()
-                        //     .removeItem(
-                        //     id!);
-                        // await controller
-                        //     .deleteitem();
-                        // WidgetsBinding
-                        //     .instance
-                        //     .addPostFrameCallback(
-                        //         (_) async {
-                        //       var controll =
-                        //       Get.find<
-                        //           AllItemController>();
-                        //       await controll
-                        //           .getData();
-                        //     });
-                        // controller
-                        //     .hideDialog();
-                        // Navigator.of(
-                        //     context)
-                        //     .pop();
+                        controller.showLoadingDialog();
+                        await DbHelp().removeItem(id);
+                        await controller.getAllTransaction();
+                        controller.hideDialog();
+                        Get.back();
                       },
                       child: Container(
                         alignment: Alignment.center,
