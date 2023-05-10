@@ -21,6 +21,9 @@ class HomeController extends BaseController {
 
   bool isIncome = false;
   List<TransactionModel>? allTransaction;
+  int totalExpanse = 0;
+  int totalIncome = 0;
+  int totalAmount = 0;
 
   @override
   void onInit() {
@@ -30,9 +33,26 @@ class HomeController extends BaseController {
 
   Future<void> getAllTransaction() async {
     userid = FirebaseAuth.instance.currentUser?.uid;
-    var allData = await DbHelp().getAllExpanse(userid!);
+    var allData = await DbHelp().getAllTransaction(userid!);
     allTransaction?.clear();
     allTransaction = allData;
+
+    totalIncome = 0;
+    totalExpanse = 0;
+
+    for (var i = 0; i < allData.length; i++) {
+      if (allData[i].transaction == 0) {
+        /// Expanse
+        totalExpanse += allData[i].price!;
+        update();
+      } else {
+        /// Income
+        totalIncome += allData[i].price!;
+        update();
+      }
+    }
+    totalAmount = totalIncome - totalExpanse;
+
     update();
   }
 
@@ -43,26 +63,31 @@ class HomeController extends BaseController {
     final utcTime = DateTime.now().toUtc();
     final localtime = utcTime.toLocal();
 
-    String checkData = "0";
-    if (isIncome) {
-      checkData = "1";
-      update();
-    } else {
-      checkData = "0";
-      update();
-    }
+    int checkData = 0;
 
     if (textcontrollerAMOUNT.text.isNotEmpty) {
       if (textcontrollerITEM.text.isNotEmpty) {
-        await DbHelp().addExpanse(
+        if (isIncome) {
+          checkData = 1;
+          isIncome = false;
+
+          /// Income
+        } else {
+          checkData = 0;
+          isIncome = false;
+
+          /// Expanse
+        }
+        await DbHelp().addTransaction(
           TransactionModel(
             date: localtime.toString(),
             note: textcontrollerITEM.text.trim(),
-            price: textcontrollerAMOUNT.text.trim(),
-            transaction: checkData.toString(),
+            price: int.parse(textcontrollerAMOUNT.text.trim()),
+            transaction: checkData,
             userid: userid!,
           ),
         );
+
         update();
         getAllTransaction();
         hideDialog();

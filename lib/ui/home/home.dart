@@ -167,7 +167,7 @@ class HomeScreen extends BaseView<HomeController> {
                         ),
                       ),
                       Text(
-                        '\$ 100',
+                        '₹ ${controller.totalAmount}',
                         style: TextStyle(
                           color: Colors.grey[800],
                           fontSize: 40.sp,
@@ -211,7 +211,7 @@ class HomeScreen extends BaseView<HomeController> {
                                       height: 5.h,
                                     ),
                                     Text(
-                                      '\$ 200',
+                                      '₹ ${controller.totalIncome}',
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontWeight: FontWeight.bold,
@@ -252,7 +252,7 @@ class HomeScreen extends BaseView<HomeController> {
                                       height: 5.h,
                                     ),
                                     Text(
-                                      '\$ 200',
+                                      '₹ ${controller.totalExpanse}',
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontWeight: FontWeight.bold,
@@ -287,8 +287,8 @@ class HomeScreen extends BaseView<HomeController> {
                             itemBuilder: (context, index) {
                               var allData = controller.allTransaction![index];
                               String? itemName = allData.note;
-                              String? price = allData.price;
-                              String? transaction = allData.transaction;
+                              int? price = allData.price;
+                              int? transaction = allData.transaction;
                               String? date = allData.date;
 
                               DateTime parseDate =
@@ -378,10 +378,10 @@ class HomeScreen extends BaseView<HomeController> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    '${transaction == "0" ? '-' : '+'}\$${price!}',
+                                                    '${transaction == 0 ? '-' : '+'} ₹${price!}',
                                                     style: TextStyle(
                                                       fontSize: 14.sp,
-                                                      color: transaction == "0"
+                                                      color: transaction == 0
                                                           ? Colors.red
                                                           : Colors.green,
                                                     ),

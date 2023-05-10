@@ -5,7 +5,8 @@ import 'package:firebase_helpers/firebase_helpers.dart';
 
 class DbHelp {
   static const String userDB = "USER";
-  static const String transactionDB = "Expanse";
+  static const String transactionDB = "Transaction";
+
 
   final db = FirebaseFirestore.instance;
 
@@ -16,22 +17,24 @@ class DbHelp {
     toMap: (data) => data.toJson(),
   );
 
-  // ///TODo Expanse Table
+  ///TODO Transaction Table
   DatabaseService<TransactionModel> transactionDb = DatabaseService(
     transactionDB,
     fromDS: (id, data) => TransactionModel.fromJson(id, data),
     toMap: (data) => data.toJson(),
   );
 
+
   Future adduser(UserModel userModel) async {
     return await userdb.create(userModel.toJson());
   }
 
-  Future addExpanse(TransactionModel transactionModel) async {
+  Future addTransaction(TransactionModel transactionModel) async {
     return await transactionDb.create(transactionModel.toJson());
   }
 
-  Future<List<TransactionModel>> getAllExpanse(String uid) async {
+
+  Future<List<TransactionModel>> getAllTransaction(String uid) async {
     var args = [
       QueryArgsV2(
         "userid",

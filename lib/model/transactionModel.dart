@@ -24,15 +24,15 @@ class TransactionModel {
 
   String? date;
   String? note;
-  String? price;
-  String? transaction;
+  int? price;
+  int? transaction;
   String? userid;
 
   TransactionModel copyWith({
     String? date,
     String? note,
-    String? price,
-    String? transaction,
+    int? price,
+    int? transaction,
     String? userid,
   }) =>
       TransactionModel(
