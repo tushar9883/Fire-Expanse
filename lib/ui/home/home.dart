@@ -444,10 +444,8 @@ class HomeScreen extends BaseView<HomeController> {
                         width: 93.w,
                         height: 46.h,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9.r),
-
-                         color: Colors.grey[600]
-                        ),
+                            borderRadius: BorderRadius.circular(9.r),
+                            color: Colors.grey[600]),
                         child: Text(
                           "Delete",
                           textAlign: TextAlign.center,
