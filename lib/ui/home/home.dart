@@ -71,7 +71,7 @@ class HomeScreen extends BaseView<HomeController> {
                               fontSize: 34.sp,
                             ),
                             maxLines: 1,
-                            overflow: TextOverflow.visible,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -80,89 +80,103 @@ class HomeScreen extends BaseView<HomeController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(10.r),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.arrow_upward,
-                                          color: Colors.green,
+                                Flexible(
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10.r),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey[200],
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Income',
-                                          style: TextStyle(
-                                            color: Colors.grey[500],
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.arrow_downward,
+                                            color: Colors.green,
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 5.h,
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Income',
+                                              style: TextStyle(
+                                                color: Colors.grey[500],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                            Text(
+                                              '₹ ${controller.totalIncome}',
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              softWrap: true,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          '₹ ${controller.totalIncome}',
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(10.r),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.arrow_downward,
-                                          color: Colors.red,
+                                Flexible(
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10.r),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey[200],
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Expense',
-                                          style: TextStyle(
-                                            color: Colors.grey[500],
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.arrow_upward,
+                                            color: Colors.red,
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 5.h,
+                                      ),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Expense',
+                                              style: TextStyle(
+                                                color: Colors.grey[500],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                            Text(
+                                              '₹ ${controller.totalExpanse}',
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              softWrap: true,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          '₹ ${controller.totalExpanse}',
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
@@ -172,6 +186,8 @@ class HomeScreen extends BaseView<HomeController> {
                     ),
                   ),
                 ),
+
+                /// Transaction
                 Expanded(
                   child: Center(
                     child: Column(
@@ -391,15 +407,18 @@ class HomeScreen extends BaseView<HomeController> {
           return AlertDialog(
             title: Center(
               child: Text(
-                'Delete Item?',
+                'Delete Transaction?',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 26.sp,
+                  fontSize: 20.sp,
                 ),
               ),
             ),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.r))),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.r),
+              ),
+            ),
             content: Text(
               "Are you sure you want to delete this Transaction from local and online server?\n\nYou won’t be able to find your item then.",
               textAlign: TextAlign.center,
@@ -426,21 +445,8 @@ class HomeScreen extends BaseView<HomeController> {
                         height: 46.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(9.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0x3f000000),
-                              blurRadius: 16.r,
-                              offset: const Offset(0, 0),
-                            ),
-                          ],
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xff4A00E0),
-                              Color(0xff8E2DE2),
-                            ],
-                            begin: Alignment(-1.0, 0),
-                            end: Alignment(1, 1),
-                          ),
+
+                         color: Colors.grey[600]
                         ),
                         child: Text(
                           "Delete",

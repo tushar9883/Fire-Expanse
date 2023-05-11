@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 class HomeBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => HomeController(), fenix: true);
+    Get.lazyPut(
+      () => HomeController(),
+      fenix: true,
+    );
   }
 }
 
@@ -56,62 +59,60 @@ class HomeController extends BaseController {
     update();
   }
 
-
-
-  // addNewTransaction() async {
-  //   showLoadingDialog();
-  //
-  //   /// Date Time UTC
-  //   final utcTime = DateTime.now().toUtc();
-  //   final localtime = utcTime.toLocal();
-  //
-  //   int checkData = 0;
-  //
-  //   if (textcontrollerAMOUNT.text.isNotEmpty) {
-  //     if (textcontrollerITEM.text.isNotEmpty) {
-  //       if (isIncome) {
-  //         checkData = 1;
-  //         isIncome = false;
-  //
-  //         /// Income
-  //       } else {
-  //         checkData = 0;
-  //         isIncome = false;
-  //
-  //         /// Expanse
-  //       }
-  //       var uid = await DbHelp().addTransaction(
-  //         TransactionModel(
-  //           date: localtime.toString(),
-  //           note: textcontrollerITEM.text.trim(),
-  //           price: int.parse(textcontrollerAMOUNT.text.trim()),
-  //           transaction: checkData,
-  //           userid: userid!,
-  //         ),
-  //       );
-  //
-  //       await DbHelp().updateID(
-  //         TransactionModel(
-  //           uid: uid.id,
-  //         ),
-  //         uid.id,
-  //       );
-  //
-  //
-  //
-  //       update();
-  //       getAllTransaction();
-  //       hideDialog();
-  //       Get.back();
-  //       textcontrollerAMOUNT.clear();
-  //       textcontrollerITEM.clear();
-  //     } else {
-  //       hideDialog();
-  //       toastbar("Add Note Some");
-  //     }
-  //   } else {
-  //     hideDialog();
-  //     toastbar("Amount is required");
-  //   }
-  // }
+// addNewTransaction() async {
+//   showLoadingDialog();
+//
+//   /// Date Time UTC
+//   final utcTime = DateTime.now().toUtc();
+//   final localtime = utcTime.toLocal();
+//
+//   int checkData = 0;
+//
+//   if (textcontrollerAMOUNT.text.isNotEmpty) {
+//     if (textcontrollerITEM.text.isNotEmpty) {
+//       if (isIncome) {
+//         checkData = 1;
+//         isIncome = false;
+//
+//         /// Income
+//       } else {
+//         checkData = 0;
+//         isIncome = false;
+//
+//         /// Expanse
+//       }
+//       var uid = await DbHelp().addTransaction(
+//         TransactionModel(
+//           date: localtime.toString(),
+//           note: textcontrollerITEM.text.trim(),
+//           price: int.parse(textcontrollerAMOUNT.text.trim()),
+//           transaction: checkData,
+//           userid: userid!,
+//         ),
+//       );
+//
+//       await DbHelp().updateID(
+//         TransactionModel(
+//           uid: uid.id,
+//         ),
+//         uid.id,
+//       );
+//
+//
+//
+//       update();
+//       getAllTransaction();
+//       hideDialog();
+//       Get.back();
+//       textcontrollerAMOUNT.clear();
+//       textcontrollerITEM.clear();
+//     } else {
+//       hideDialog();
+//       toastbar("Add Note Some");
+//     }
+//   } else {
+//     hideDialog();
+//     toastbar("Amount is required");
+//   }
+// }
 }

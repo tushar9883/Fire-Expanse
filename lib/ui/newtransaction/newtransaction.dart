@@ -83,7 +83,6 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
                 SizedBox(
                   height: 12.h,
                 ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
@@ -99,17 +98,25 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
                             horizontal: 12.w,
                             vertical: 10.h,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.r),
-                            color: controller.transactionType == 0 ? Colors.red[400] : Colors.grey[300],
-                          ),
-
+                          decoration: controller.transactionType == 0
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  color: Colors.red[400]
+                                  // : Colors.grey[300],
+                                  )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                      color: const Color(0xffE0E0E0),
+                                      width: 2)),
                           child: Text(
-                            "Expanse",
+                            "Expense",
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
-                              color: controller.transactionType == 0 ? Colors.white : Colors.black,
+                              color: controller.transactionType == 0
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                         ),
@@ -127,16 +134,25 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
                             horizontal: 12.w,
                             vertical: 10.h,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.r),
-                            color: controller.transactionType == 1 ? Colors.green[400] : Colors.grey[300],
-                          ),
+                          decoration: controller.transactionType == 1
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  color: Colors.green[400]
+                                  // : Colors.grey[300],
+                                  )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border: Border.all(
+                                      color: const Color(0xffE0E0E0),
+                                      width: 2)),
                           child: Text(
                             "Income",
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
-                             color: controller.transactionType == 1 ? Colors.white : Colors.black,
+                              color: controller.transactionType == 1
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                         ),
@@ -144,82 +160,6 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
                     ],
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                //   child: Row(
-                //     children: [
-                //       InkWell(
-                //         onTap: () {
-                //           controller.transactionType = 0;
-                //           controller.update();
-                //         },
-                //         child: Container(
-                //           padding: EdgeInsets.symmetric(
-                //             horizontal: 12.w,
-                //             vertical: 8.h,
-                //           ),
-                //           decoration: controller.transactionType == 0
-                //               ? BoxDecoration(
-                //             color: const Color(0xffFFD7D7),
-                //                   // color: const Color(0xffFFD7D7),
-                //                   borderRadius: BorderRadius.circular(6.r),
-                //                 )
-                //               : BoxDecoration(
-                //                   border: Border.all(
-                //                     color: Colors.red,
-                //                     // color: const Color(0xffFFD7D7),
-                //                     width: 2.r,
-                //                   ),
-                //                   borderRadius: BorderRadius.circular(6.r),
-                //                 ),
-                //           child: Text(
-                //             "Expanse",
-                //             style: TextStyle(
-                //               fontSize: 14.sp,
-                //               fontWeight: FontWeight.w500,
-                //               color: const Color(0xff903030),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         width: 15.w,
-                //       ),
-                //       InkWell(
-                //         onTap: () {
-                //           controller.transactionType = 1;
-                //           controller.update();
-                //         },
-                //         child: Container(
-                //           padding: EdgeInsets.symmetric(
-                //             horizontal: 12.w,
-                //             vertical: 8.h,
-                //           ),
-                //           decoration: controller.transactionType == 1
-                //               ? BoxDecoration(
-                //                   color: const Color(0xffA6E0A6),
-                //                   borderRadius: BorderRadius.circular(6.r),
-                //                 )
-                //               : BoxDecoration(
-                //                   border: Border.all(
-                //                     color: Colors.green,
-                //                     width: 2.r,
-                //                   ),
-                //                   borderRadius: BorderRadius.circular(6.r),
-                //                 ),
-                //           child: Text(
-                //             "Income",
-                //             style: TextStyle(
-                //               fontSize: 14.sp,
-                //               fontWeight: FontWeight.w500,
-                //               color: const Color(0xff30903F),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -276,7 +216,11 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black,
+                            color: controller.transactionType == 1
+                                ? Colors.green[400]
+                                : controller.transactionType == 0
+                                    ? Colors.red[400]
+                                    : Colors.black,
                           ),
                         ),
                       ),

@@ -85,6 +85,9 @@ class NewTransactionController extends BaseController {
   /// Update Transaction
 
   updateTransaction() async {
+    showLoadingDialog();
+
+
     /// Date Time UTC
     final utcTime = DateTime.now().toUtc();
     final localtime = utcTime.toLocal();
