@@ -23,6 +23,14 @@ class TransactionModel {
     userid = json['userid'];
     uid = mId;
   }
+  TransactionModel.fromDB(dynamic json) {
+    date = json['date'];
+    note = json['note'];
+    price = json['price'];
+    transaction = json['transaction'];
+    userid = json['userid'];
+    uid = json['uid'];
+  }
 
   String? date;
   String? note;

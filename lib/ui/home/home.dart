@@ -1,5 +1,6 @@
 import 'package:data_expanse/base/base_view_view_model.dart';
 import 'package:data_expanse/db/db_helper.dart';
+import 'package:data_expanse/router/router_name.dart';
 import 'package:data_expanse/ui/home/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,119 +13,12 @@ class HomeScreen extends BaseView<HomeController> {
 
   @override
   Widget vBuilder(BuildContext context) {
-    // new transaction
-    void newTransaction() {
-      showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return StatefulBuilder(
-              builder: (BuildContext context, setState) {
-                return AlertDialog(
-                  title: const Text('N E W  T R A N S A C T I O N'),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text('Expense'),
-                            Switch(
-                              value: controller.isIncome,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  controller.isIncome = newValue;
-                                });
-                              },
-                            ),
-                            const Text('Income'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Form(
-                                key: controller.formKey,
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Amount?',
-                                  ),
-                                  validator: (text) {
-                                    if (text == null || text.isEmpty) {
-                                      return 'Enter an amount';
-                                    }
-                                    return null;
-                                  },
-                                  controller: controller.textcontrollerAMOUNT,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'For what?',
-                                ),
-                                controller: controller.textcontrollerITEM,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    MaterialButton(
-                      color: Colors.grey[600],
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        controller.textcontrollerITEM.clear();
-                        controller.textcontrollerAMOUNT.clear();
-                      },
-                    ),
-                    MaterialButton(
-                      color: Colors.grey[600],
-                      child: const Text(
-                        'Enter',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {
-                        if (controller.formKey.currentState!.validate()) {
-                          controller.addNewTransaction();
-                        }
-                      },
-                    )
-                  ],
-                );
-              },
-            );
-          });
-    }
-
     return Scaffold(
       backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey[500],
-        onPressed: () => newTransaction(),
+        onPressed: () => Get.toNamed(RouterName.newTransaction),
+        // onPressed: () => newTransaction(),
         child: const Icon(Icons.add),
       ),
       body: Stack(
@@ -174,8 +68,10 @@ class HomeScreen extends BaseView<HomeController> {
                             '₹ ${controller.totalAmount}',
                             style: TextStyle(
                               color: Colors.grey[800],
-                              fontSize: 40.sp,
+                              fontSize: 34.sp,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -328,103 +224,124 @@ class HomeScreen extends BaseView<HomeController> {
                                             ),
                                           ],
                                         ),
-                                        child: Container(
-                                          padding: EdgeInsets.all(15.r),
-                                          color: Colors.grey[100],
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 56.w,
-                                                    height: 56.w,
-                                                    alignment: Alignment.center,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.r),
-                                                      color: const Color(
-                                                          0xffececec),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          dayoutput,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w900,
-                                                            color: Colors
-                                                                .grey[700],
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          monthoutput,
-                                                          style: TextStyle(
-                                                            fontSize: 12.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors
-                                                                .grey[700],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Flexible(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                              horizontal: 8.w,
+                                        child: InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          onTap: () {
+                                            Get.toNamed(
+                                              RouterName.newTransaction,
+                                              arguments: controller
+                                                  .allTransaction?[index]
+                                                  .toJson(),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(15.r),
+                                            color: Colors.grey[100],
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: 56.w,
+                                                      height: 56.w,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.r),
+                                                        color: const Color(
+                                                            0xffececec),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            dayoutput,
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                              color: Colors
+                                                                  .grey[700],
                                                             ),
-                                                            child: Text(
-                                                              itemName!,
-                                                              style: TextStyle(
-                                                                fontSize: 14.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .grey[700],
+                                                          ),
+                                                          Text(
+                                                            monthoutput,
+                                                            style: TextStyle(
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Colors
+                                                                  .grey[700],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                horizontal: 8.w,
                                                               ),
-                                                              maxLines: 5,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .visible,
+                                                              child: Text(
+                                                                itemName!,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      700],
+                                                                ),
+                                                                maxLines: 5,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .visible,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Text(
-                                                          '${transaction == 0 ? '-' : '+'} ₹${price!}',
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                            color:
-                                                                transaction == 0
-                                                                    ? Colors.red
-                                                                    : Colors
-                                                                        .green,
+                                                          Text(
+                                                            '${transaction == 0 ? '-' : '+'} ₹${price!}',
+                                                            style: TextStyle(
+                                                              fontSize: 14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: transaction ==
+                                                                      0
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .green,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

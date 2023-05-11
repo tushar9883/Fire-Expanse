@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:data_expanse/base/base_controller.dart';
 import 'package:data_expanse/router/router_name.dart';
+import 'package:data_expanse/ui/home/home_binding.dart';
 import 'package:data_expanse/utils/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,16 +22,15 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
   getUid() async {
     String isLoggedIn = await SecureStorage.readSecureData("userid");
 
-    Timer(
-      const Duration(seconds: 3),
-      () {
-        if (isLoggedIn == '1') {
-          Get.offNamed(RouterName.home);
-        } else {
-          Get.offNamed(RouterName.login);
-        }
-      },
-    );
+    if (isLoggedIn == '1') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        var sata = Get.find<HomeController>();
+        sata.getAllTransaction();
+      });
+      await Get.offNamed(RouterName.home);
+    } else {
+      await Get.offNamed(RouterName.login);
+    }
     setState(() {});
   }
 

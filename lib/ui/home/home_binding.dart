@@ -1,7 +1,6 @@
 import 'package:data_expanse/base/base_controller.dart';
 import 'package:data_expanse/db/db_helper.dart';
 import 'package:data_expanse/model/transactionModel.dart';
-import 'package:data_expanse/utils/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -59,60 +58,60 @@ class HomeController extends BaseController {
 
 
 
-  addNewTransaction() async {
-    showLoadingDialog();
-
-    /// Date Time UTC
-    final utcTime = DateTime.now().toUtc();
-    final localtime = utcTime.toLocal();
-
-    int checkData = 0;
-
-    if (textcontrollerAMOUNT.text.isNotEmpty) {
-      if (textcontrollerITEM.text.isNotEmpty) {
-        if (isIncome) {
-          checkData = 1;
-          isIncome = false;
-
-          /// Income
-        } else {
-          checkData = 0;
-          isIncome = false;
-
-          /// Expanse
-        }
-        var uid = await DbHelp().addTransaction(
-          TransactionModel(
-            date: localtime.toString(),
-            note: textcontrollerITEM.text.trim(),
-            price: int.parse(textcontrollerAMOUNT.text.trim()),
-            transaction: checkData,
-            userid: userid!,
-          ),
-        );
-
-        await DbHelp().updateID(
-          TransactionModel(
-            uid: uid.id,
-          ),
-          uid.id,
-        );
-
-
-
-        update();
-        getAllTransaction();
-        hideDialog();
-        Get.back();
-        textcontrollerAMOUNT.clear();
-        textcontrollerITEM.clear();
-      } else {
-        hideDialog();
-        toastbar("Add Note Some");
-      }
-    } else {
-      hideDialog();
-      toastbar("Amount is required");
-    }
-  }
+  // addNewTransaction() async {
+  //   showLoadingDialog();
+  //
+  //   /// Date Time UTC
+  //   final utcTime = DateTime.now().toUtc();
+  //   final localtime = utcTime.toLocal();
+  //
+  //   int checkData = 0;
+  //
+  //   if (textcontrollerAMOUNT.text.isNotEmpty) {
+  //     if (textcontrollerITEM.text.isNotEmpty) {
+  //       if (isIncome) {
+  //         checkData = 1;
+  //         isIncome = false;
+  //
+  //         /// Income
+  //       } else {
+  //         checkData = 0;
+  //         isIncome = false;
+  //
+  //         /// Expanse
+  //       }
+  //       var uid = await DbHelp().addTransaction(
+  //         TransactionModel(
+  //           date: localtime.toString(),
+  //           note: textcontrollerITEM.text.trim(),
+  //           price: int.parse(textcontrollerAMOUNT.text.trim()),
+  //           transaction: checkData,
+  //           userid: userid!,
+  //         ),
+  //       );
+  //
+  //       await DbHelp().updateID(
+  //         TransactionModel(
+  //           uid: uid.id,
+  //         ),
+  //         uid.id,
+  //       );
+  //
+  //
+  //
+  //       update();
+  //       getAllTransaction();
+  //       hideDialog();
+  //       Get.back();
+  //       textcontrollerAMOUNT.clear();
+  //       textcontrollerITEM.clear();
+  //     } else {
+  //       hideDialog();
+  //       toastbar("Add Note Some");
+  //     }
+  //   } else {
+  //     hideDialog();
+  //     toastbar("Amount is required");
+  //   }
+  // }
 }

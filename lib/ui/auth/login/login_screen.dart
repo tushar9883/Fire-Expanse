@@ -82,7 +82,7 @@ class LoginScreen extends BaseView<LoginController> {
                   alignment: Alignment.centerRight,
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed(RouterName.forgotpassword);
+                      Get.toNamed(RouterName.forgotPassword);
                     },
                     child: Text(
                       'Forgot Password?',

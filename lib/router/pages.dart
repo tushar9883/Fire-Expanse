@@ -8,13 +8,15 @@ import 'package:data_expanse/ui/auth/singup/singup_binding.dart';
 import 'package:data_expanse/ui/auth/singup/singup_screen.dart';
 import 'package:data_expanse/ui/home/home.dart';
 import 'package:data_expanse/ui/home/home_binding.dart';
+import 'package:data_expanse/ui/newtransaction/newtransaction.dart';
+import 'package:data_expanse/ui/newtransaction/newtransaction_binding.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class Pages {
   static List<GetPage> pages() {
     return [
       GetPage(
-        name: RouterName.authcheck,
+        name: RouterName.authCheck,
         page: () => const AuthCheckScreen(),
       ),
       GetPage(
@@ -23,7 +25,7 @@ class Pages {
         binding: LoginBinding(),
       ),
       GetPage(
-        name: RouterName.forgotpassword,
+        name: RouterName.forgotPassword,
         page: () => const ForgotScreen(),
         binding: ForgotBinding(),
       ),
@@ -36,6 +38,11 @@ class Pages {
         name: RouterName.home,
         page: () => const HomeScreen(),
         binding: HomeBinding(),
+      ),
+      GetPage(
+        name: RouterName.newTransaction,
+        page: () => const NewTransactionScreen(),
+        binding: NewTransactionBinding(),
       ),
     ];
   }

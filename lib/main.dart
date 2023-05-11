@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: RouterName.authcheck,
+        initialRoute: RouterName.authCheck,
         getPages: Pages.pages(),
       ),
     );
