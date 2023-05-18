@@ -16,6 +16,44 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
         return true;
       },
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.grey[300],
+          title: Text(
+            "New Transaction",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          centerTitle: true,
+          leading: InkWell(
+            highlightColor: Colors.grey[300],
+            onTap: () {
+              controller.transactionType = 3;
+              controller.update();
+              Get.back();
+            },
+            child: Container(
+              margin: EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey[200],
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5.w,
+                      color: Colors.grey.shade400,
+                    )
+                  ]),
+              child: Icon(
+                Icons.close,
+                color: Colors.grey[500],
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Colors.grey[200],
         body: SafeArea(
           child: SingleChildScrollView(
@@ -23,49 +61,6 @@ class NewTransactionScreen extends BaseView<NewTransactionController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 46.h,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "New Transaction",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          onTap: () {
-                            controller.transactionType = 3;
-                            controller.update();
-                            Get.back();
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 2.h,
-                            ),
-                            child: Icon(
-                              Icons.close,
-                              size: 22.r,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: const Color(0xffE4E4E4),
-                ),
                 SizedBox(
                   height: 25.h,
                 ),

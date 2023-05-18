@@ -36,12 +36,11 @@ class SingupController extends BaseController {
     } else {
       try {
         showLoadingDialog();
-        UserCredential userCredential = await FirebaseAuth.instance
+       await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: email.text.trim(), password: pass.text.trim());
         await SecureStorage.writeSecureData('userid', '1');
-        // await SecureStorage.writeSecureData("userid", userCredential.user!.uid ?? "");
-        // await storage.write(key: "userid", value: userCredential.user?.uid);
+
         var data = await DbHelp().adduser(UserModel(
           name: name.text.trim(),
           email: email.text.trim(),
@@ -50,7 +49,6 @@ class SingupController extends BaseController {
         ));
 
         await SecureStorage.writeSecureData("uid", data.id ?? "");
-        // await storage.write(key: "uid", value: data.id);
         print(
             "Data Name : ${name.text} \n Email: ${email.text}\n User Id : ${FirebaseAuth.instance.currentUser?.uid} \n Password : ${pass.text}");
 

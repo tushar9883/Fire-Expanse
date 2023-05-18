@@ -2,6 +2,8 @@ import 'package:data_expanse/base/base_view_view_model.dart';
 import 'package:data_expanse/db/db_helper.dart';
 import 'package:data_expanse/router/router_name.dart';
 import 'package:data_expanse/ui/home/home_binding.dart';
+import 'package:data_expanse/utils/secure_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -14,6 +16,50 @@ class HomeScreen extends BaseView<HomeController> {
   @override
   Widget vBuilder(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.grey[300],
+        title: Text(
+          "Transaction",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        leadingWidth: 36,
+        centerTitle: true,
+        actions: [
+          InkWell(
+            highlightColor: Colors.grey[300],
+            onTap: () async {
+              controller.showLoadingDialog();
+              await FirebaseAuth.instance.signOut();
+              await SecureStorage.deleteAll();
+              controller.update();
+              controller.hideDialog();
+              await Get.offAllNamed(RouterName.login);
+            },
+            child: Container(
+              margin: EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey[200],
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5.w,
+                      color: Colors.grey.shade400,
+                    )
+                  ]),
+              child: Icon(
+                Icons.logout,
+                color: Colors.grey[500],
+              ),
+            ),
+          ),
+        ],
+      ),
       backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey[500],
@@ -27,10 +73,6 @@ class HomeScreen extends BaseView<HomeController> {
             padding: EdgeInsets.all(25.r),
             child: Column(
               children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-
                 /// Top Card
                 Padding(
                   padding: EdgeInsets.all(4.r),
